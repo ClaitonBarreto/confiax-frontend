@@ -1,12 +1,12 @@
 FROM node:12-alpine
 
-WORKDIR /frontend
+WORKDIR /confiax-frontend
 
-COPY ./frontend/package.json .
+COPY ./confiax-frontend/package.json .
 
 RUN yarn
 
-COPY ./frontend .
+COPY ./confiax-frontend .
 
 EXPOSE 3000
 
