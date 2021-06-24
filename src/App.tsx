@@ -1,25 +1,37 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import { createStore,Store } from 'redux'
+import { Provider } from 'react-redux'
+
+import { notificationReducer } from './context/reducers/notification'
+import GlobalStyle from './globalStyle'
+import Notification from './components/Notification'
+
+import HomePage from './pages/Home'
+import Users from './pages/Users'
+import CreateUser from './pages/CreateUser'
+import ShowUser from './pages/ShowUser'
+
+const store: Store<NotificationState, NotificationActions> & {
+  dispatch: DispatchType
+} = createStore(notificationReducer)
 
 function App() {
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Provider store={store}>
+        <Notification />
+        <GlobalStyle />
+        <Router>
+          <Switch>
+            <Route exact path="/" component={HomePage} />
+            <Route exact path="/users" component={Users} />
+            <Route path="/users/create" component={CreateUser} />
+            <Route path="/users/:id" component={ShowUser} />
+          </Switch>
+        </Router>
+      </Provider>
+    </>
   );
 }
 
